@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns="http://www.w3.org/1999/html">
 <head>
     <meta charset="UTF-8">
     <title>Siripuram's URL Shortner service !!!</title>
+    <script src="/js/index.js"></script>
 </head>
 <body>
 Welcome to Siripuram's URL Shortner service !!!
 <br><br>
-    <form action="/action_page.php">
+
         <br><br>
+<span id="error" style="display: none;">Enter valid Url</span>
         <label for="url">Enter your URL</label><br>
         <input type="text" id="url" name="url" value="">&nbsp;&nbsp;
-        <input type="submit" value="Shorten URL">
+        <button type="button" onclick="createShortUrl()">Shorten URL</button>
         <br><br>
-        <p><label for="url">Shortened URL</label> : <a>https://s.com/1234</a></p>
+        <p><label for="url">Shortened URL</label> : <a id="shortUrl" style="display: none;">Test</a></p>
 
-    </form>
 
 </body>
 </html>
