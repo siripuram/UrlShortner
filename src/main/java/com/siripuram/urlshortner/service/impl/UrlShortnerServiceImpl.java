@@ -1,6 +1,5 @@
 package com.siripuram.urlshortner.service.impl;
 
-import com.siripuram.urlshortner.controller.UrlShortnerController;
 import com.siripuram.urlshortner.dto.UrlShortnerDTO;
 import com.siripuram.urlshortner.entity.UrlEntity;
 import com.siripuram.urlshortner.repository.UrlShortnerRepository;
@@ -11,10 +10,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.EntityNotFoundException;
-import java.time.LocalDate;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
+
 
 @Service
 public class UrlShortnerServiceImpl implements UrlShortnerService {
@@ -32,21 +29,25 @@ public class UrlShortnerServiceImpl implements UrlShortnerService {
     @Override
     public String convertToShortUrl(UrlShortnerDTO urlShortnerDTO) {
         var url = new UrlEntity();
-        int expiryDays = 90;
         Date currentDate = new Date();
-        LOG.info("All input URL's from the table:"+urlShortnerRepository.findAll());
+        LOG.info("All input URL's from the table:{}",urlShortnerRepository.findAll());
+
+        //lookup to see if it already present
 
         url.setInputUrl(urlShortnerDTO.getInputURL());
-        //url.setInputUrl("https://www.apple.com/iphone");
 
         long time = currentDate.getTime()+7*24*60*60*1000; // 7 Days for now ...
         Date expiryDate = new Date(time);
 
-        //url.setExpiryDate(urlShortnerDTO.getUrlExpiryDate());
         url.setExpiryDate(expiryDate);
         url.setCreatedDate(new Date());
 
         var entity = urlShortnerRepository.save(url);
+
+        // I have connection with ID + input URL  //entity  // new system of records
+
+        // I need a reference of input URL existence in the system.
+
 
         return conversion.encode(entity.getId());
     }
@@ -57,7 +58,7 @@ public class UrlShortnerServiceImpl implements UrlShortnerService {
         var entity = urlShortnerRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("There is no entity with " + shortUrl));
 
-        LOG.info("Expiry Date:"+entity.getExpiryDate());
+        LOG.info("Expiry Date:{}",entity.getExpiryDate());
         if (entity.getExpiryDate() != null && entity.getExpiryDate().before(new Date())){
             urlShortnerRepository.delete(entity);
             throw new EntityNotFoundException("Link expired!");

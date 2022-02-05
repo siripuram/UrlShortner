@@ -6,7 +6,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -26,7 +25,7 @@ public class UrlShortnerController {
     public String convertToShortUrl(@RequestBody UrlShortnerDTO request) {
         LOG.info("Calling convertToShortUrl():");
         String returnShortUrlValue = urlShortnerService.convertToShortUrl(request);
-        LOG.info("Hari's returnShortUrlValue:"+returnShortUrlValue);
+        LOG.info("Hari's returnShortUrlValue:{}",returnShortUrlValue);
 
         return returnShortUrlValue;
     }
