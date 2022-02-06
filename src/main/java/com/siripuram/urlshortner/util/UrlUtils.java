@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 
 public class UrlUtils {
 
-    public String computeCheckSum(String url){
+    public String computeCheckSum(String url) {
 
         //LOG.info("url:{}",url);
         String decodedUrl = decode(url);
@@ -26,13 +26,26 @@ public class UrlUtils {
             return decodedUrlString;
         } catch (Exception e) {
             // TODO: handle exception
-            return "Issue while decoding"+e.getMessage();
+            return "Issue while decoding" + e.getMessage();
 
         }
-
-
     }
 
+    String generateOTP(int len)
+    {
+        // All possible characters of my OTP
+        String str = "abcdefghijklmnopqrstuvwxyzABCD"
+                +"EFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        int n = str.length();
+
+        // String to hold my OTP
+        String OTP="";
+
+        for (int i = 1; i <= len; i++)
+            OTP += (str.charAt((int) ((Math.random()*10) % n)));
+
+        return(OTP);
+    }
 
 
 }
